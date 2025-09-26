@@ -8,3 +8,14 @@ C:\Windows Application\DBMS\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\ob
 C:\Windows Application\DBMS\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\23133021_Nguyen_Ngoc_Hai.csproj.CoreCompileInputs.cache
 C:\Windows Application\DBMS\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\23133021_Nguyen_Ngoc_Hai.exe
 C:\Windows Application\DBMS\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\23133021_Nguyen_Ngoc_Hai.pdb
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\bin\Debug\23133021_Nguyen_Ngoc_Hai.exe.config
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\bin\Debug\23133021_Nguyen_Ngoc_Hai.exe
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\bin\Debug\23133021_Nguyen_Ngoc_Hai.pdb
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\23133021_Nguyen_Ngoc_Hai.csproj.AssemblyReference.cache
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\_23133021_Nguyen_Ngoc_Hai.Properties.Resources.resources
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\23133021_Nguyen_Ngoc_Hai.csproj.GenerateResource.cache
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\23133021_Nguyen_Ngoc_Hai.csproj.CoreCompileInputs.cache
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\23133021_Nguyen_Ngoc_Hai.exe
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\23133021_Nguyen_Ngoc_Hai.pdb
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\_23133021_Nguyen_Ngoc_Hai.FormChiTietHoaDon.resources
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\_23133021_Nguyen_Ngoc_Hai.FormMain.resources
