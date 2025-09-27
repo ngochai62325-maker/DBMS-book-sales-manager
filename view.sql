@@ -33,6 +33,7 @@ select
 from LoaiSach;
 go
 
+
 -- View hiển thị thông tin hóa đơn
 create view vw_DanhSachHoaDon
 as
@@ -44,21 +45,21 @@ select
 from HoaDon;
 go
 
-/*
--- View hiển thị chi tiết hóa đơn
+-- View hiển thị chi tiết hóa đơn (chỉ hiển thị sách có trong chi tiết hóa đơn)
 create view vw_ChiTietHoaDon
 as
 select 
     ct.MaHoaDon as [Mã Hóa Đơn],
-    hd.NgayLapHoaDon as [Ngày Lập],
-    hd.TenKhachHang as [Tên Khách Hàng],
+    ct.MaSach as [Mã Sách],
     s.TenSach as [Tên Sách],
-    ct.SoLuong as [Số Lượng],
+    s.TacGia as [Tác Giả],
+    ct.SoLuong as [Số Lượng],  -- Số lượng trong chi tiết hóa đơn
     s.GiaBan as [Giá Bán],
-    (ct.SoLuong * s.GiaBan) as [Thành Tiền]
+    dbo.fn_TinhThanhTien(ct.SoLuong, s.GiaBan) as [Thành Tiền]
 from ChiTietHoaDon ct
-inner join HoaDon hd on ct.MaHoaDon = hd.MaHoaDon
 inner join Sach s on ct.MaSach = s.MaSach;
 go
-*/
+
+
+
 
