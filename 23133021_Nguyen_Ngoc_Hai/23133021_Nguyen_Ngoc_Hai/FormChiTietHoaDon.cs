@@ -27,6 +27,30 @@ namespace _23133021_Nguyen_Ngoc_Hai
         {
             title.Text = "Chi Tiết Hóa Đơn " + maHoaDon;
             loadChiTietHoaDon();
+            capNhatTongTien(); // Tính tổng tiền ngay khi khởi tạo
+        }
+
+        // Tính và hiển thị tổng tiền sử dụng function fn_TinhTongTienHoaDon
+        private void capNhatTongTien()
+        {
+            try
+            {
+                string query = "SELECT dbo.fn_TinhTongTienHoaDon(" + maHoaDon + ") AS TongTien";
+                var result = dataProvider.execScaler(query);
+                
+                decimal giaTriTongTien = 0;
+                if (result != null && result != DBNull.Value)
+                {
+                    giaTriTongTien = Convert.ToDecimal(result);
+                }
+
+                tongTien.Text = "Tổng tiền: " + giaTriTongTien.ToString("N0") + " VNĐ";
+            }
+            catch (Exception ex)
+            {
+                tongTien.Text = "Tổng tiền: 0 VNĐ";
+                // Có thể log error nếu cần
+            }
         }
 
         // Load chi tiết hóa đơn (chỉ hiển thị sách đã mua của hóa đơn cụ thể)
@@ -44,8 +68,17 @@ namespace _23133021_Nguyen_Ngoc_Hai
             {
                 DataGridViewRow row = dgChiTietHoaDon.Rows[rowID];
 
-                Sach.Text = row.Cells[0].Value.ToString();                // Tên Sách
-                numSoLuongSach.Value = (int)row.Cells[1].Value;          // Số Lượng đã mua
+                // Kiểm tra null trước khi gán giá trị
+                Sach.Text = row.Cells[0].Value?.ToString() ?? "";                // Tên Sách
+                
+                if (row.Cells[1].Value != null && row.Cells[1].Value != DBNull.Value)
+                {
+                    numSoLuongSach.Value = (int)row.Cells[1].Value;          // Số Lượng đã mua
+                }
+                else
+                {
+                    numSoLuongSach.Value = 1;
+                }
             }
         }
 
@@ -88,6 +121,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 var result = dataProvider.execQuery(query.ToString());
                 
                 loadChiTietHoaDon(); // Refresh danh sách
+                capNhatTongTien(); // Cập nhật tổng tiền
 
                 if (result.Rows.Count > 0)
                 {
@@ -150,6 +184,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 if (result > 0)
                 {
                     loadChiTietHoaDon();
+                    capNhatTongTien(); // Cập nhật tổng tiền
                     MessageBox.Show("Cập nhật chi tiết hóa đơn thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
                 else
@@ -201,6 +236,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
                     dataProvider.execNonQuery(query.ToString());
 
                     loadChiTietHoaDon();
+                    capNhatTongTien(); // Cập nhật tổng tiền
                     MessageBox.Show("Xóa chi tiết hóa đơn thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     
                     // Clear form

@@ -80,18 +80,49 @@ namespace _23133021_Nguyen_Ngoc_Hai
             {
                 DataGridViewRow row = dgSach.Rows[rowID];
 
-                maSachSach = (int)row.Cells[0].Value;
-                txtSachTenSach.Text = row.Cells[1].Value.ToString();
-                cbSachLoaiSach.Text = row.Cells[2].Value.ToString();
-                txtSachTacGia.Text = row.Cells[3].Value.ToString();
-                numSachSoLuong.Value = (int)row.Cells[4].Value;
-                numSachGiaBan.Value = Convert.ToInt32(row.Cells[5].Value);
+                // Tạm thời tắt event tìm kiếm để tránh trigger khi cập nhật dữ liệu
+                txtSachTenSach.TextChanged -= txtSachTenSach_TextChanged;
+                txtSachTacGia.TextChanged -= txtSachTacGia_TextChanged;
+                cbSachLoaiSach.SelectedIndexChanged -= cbSachLoaiSach_TimKiem_SelectedIndexChanged;
+
+                // Kiểm tra null trước khi gán giá trị
+                if (row.Cells[0].Value != null && row.Cells[0].Value != DBNull.Value)
+                {
+                    maSachSach = (int)row.Cells[0].Value;
+                }
+
+                txtSachTenSach.Text = row.Cells[1].Value?.ToString() ?? "";
+                cbSachLoaiSach.Text = row.Cells[2].Value?.ToString() ?? "";
+                txtSachTacGia.Text = row.Cells[3].Value?.ToString() ?? "";
+
+                if (row.Cells[4].Value != null && row.Cells[4].Value != DBNull.Value)
+                {
+                    numSachSoLuong.Value = (int)row.Cells[4].Value;
+                }
+                else
+                {
+                    numSachSoLuong.Value = 0;
+                }
+
+                if (row.Cells[5].Value != null && row.Cells[5].Value != DBNull.Value)
+                {
+                    numSachGiaBan.Value = Convert.ToInt32(row.Cells[5].Value);
+                }
+                else
+                {
+                    numSachGiaBan.Value = 0;
+                }
 
                 // Lấy MaLoaiSach từ SelectedValue thay vì query
-                if (cbSachLoaiSach.SelectedValue != null)
+                if (cbSachLoaiSach.SelectedValue != null && cbSachLoaiSach.SelectedValue != DBNull.Value)
                 {
                     maSachLoaiSach = (int)cbSachLoaiSach.SelectedValue;
                 }
+
+                // Bật lại event tìm kiếm
+                txtSachTenSach.TextChanged += txtSachTenSach_TextChanged;
+                txtSachTacGia.TextChanged += txtSachTacGia_TextChanged;
+                cbSachLoaiSach.SelectedIndexChanged += cbSachLoaiSach_TimKiem_SelectedIndexChanged;
             } 
         }
 
@@ -203,8 +234,19 @@ namespace _23133021_Nguyen_Ngoc_Hai
             {
                 DataGridViewRow row = dgLoaiSach.Rows[rowID];
 
-                maLoaiSachLoaiSach = (int)row.Cells[0].Value;
-                txtLoaiSachTenLoaiSach.Text = row.Cells[1].Value.ToString();
+                // Tạm thời tắt event tìm kiếm để tránh trigger khi cập nhật dữ liệu
+                txtLoaiSachTenLoaiSach.TextChanged -= txtLoaiSachTenLoaiSach_TextChanged;
+
+                // Kiểm tra null trước khi gán giá trị
+                if (row.Cells[0].Value != null && row.Cells[0].Value != DBNull.Value)
+                {
+                    maLoaiSachLoaiSach = (int)row.Cells[0].Value;
+                }
+
+                txtLoaiSachTenLoaiSach.Text = row.Cells[1].Value?.ToString() ?? "";
+
+                // Bật lại event tìm kiếm
+                txtLoaiSachTenLoaiSach.TextChanged += txtLoaiSachTenLoaiSach_TextChanged;
             }
         }
 
@@ -312,10 +354,40 @@ namespace _23133021_Nguyen_Ngoc_Hai
             {
                 DataGridViewRow row = dgHoaDon.Rows[rowID];
 
-                maHoaDonHoaDon = (int)row.Cells[0].Value;
-                dateNgayLapHoaDon.Value = DateTime.Parse(row.Cells[1].Value.ToString());
-                txtHoaDonTenKH.Text = row.Cells[2].Value.ToString();
-                txtHoaDonSDTKH.Text = row.Cells[3].Value.ToString();
+                // Tạm thời tắt event tìm kiếm để tránh trigger khi cập nhật dữ liệu
+                txtHoaDonTenKH.TextChanged -= txtHoaDonTenKH_TextChanged;
+                txtHoaDonSDTKH.TextChanged -= txtHoaDonSDTKH_TextChanged;
+                dateNgayLapHoaDon.ValueChanged -= dateNgayLapHoaDon_ValueChanged;
+
+                // Kiểm tra null trước khi gán giá trị
+                if (row.Cells[0].Value != null && row.Cells[0].Value != DBNull.Value)
+                {
+                    maHoaDonHoaDon = (int)row.Cells[0].Value;
+                }
+
+                if (row.Cells[1].Value != null && row.Cells[1].Value != DBNull.Value)
+                {
+                    try
+                    {
+                        dateNgayLapHoaDon.Value = DateTime.Parse(row.Cells[1].Value.ToString());
+                    }
+                    catch
+                    {
+                        dateNgayLapHoaDon.Value = DateTime.Now;
+                    }
+                }
+                else
+                {
+                    dateNgayLapHoaDon.Value = DateTime.Now;
+                }
+
+                txtHoaDonTenKH.Text = row.Cells[2].Value?.ToString() ?? "";
+                txtHoaDonSDTKH.Text = row.Cells[3].Value?.ToString() ?? "";
+
+                // Bật lại event tìm kiếm
+                txtHoaDonTenKH.TextChanged += txtHoaDonTenKH_TextChanged;
+                txtHoaDonSDTKH.TextChanged += txtHoaDonSDTKH_TextChanged;
+                dateNgayLapHoaDon.ValueChanged += dateNgayLapHoaDon_ValueChanged;
             }
         }
 
