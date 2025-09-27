@@ -38,15 +38,30 @@ namespace _23133021_Nguyen_Ngoc_Hai
         {
             loadDgSach();
             loadcbSachLoaiSach();
+            
+            // Thêm tính năng tìm kiếm riêng cho từng TextBox
+            txtSachTenSach.TextChanged += txtSachTenSach_TextChanged;
+            txtSachTacGia.TextChanged += txtSachTacGia_TextChanged;
+            cbSachLoaiSach.SelectedIndexChanged += cbSachLoaiSach_TimKiem_SelectedIndexChanged;
         }
 
         private void loadDgSach()
         {
-            DataTable dt = new DataTable();
-            dt = dataProvider.execQuery("SELECT * FROM vw_DanhSachSach");
-            dgSach.DataSource = dt;
+            try
+            {
+                DataTable dt = dataProvider.execQuery("SELECT * FROM vw_DanhSachSach");
+                dgSach.DataSource = dt;
 
-            maSachSach = (int)dt.Rows[0][0];
+                // Kiểm tra có dữ liệu trước khi gán maSachSach
+                if (dt.Rows.Count > 0)
+                {
+                    maSachSach = (int)dt.Rows[0][0];
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể tải danh sách sách! " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void loadcbSachLoaiSach()
@@ -153,13 +168,23 @@ namespace _23133021_Nguyen_Ngoc_Hai
         private void cbSachLoaiSach_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox combobox = sender as ComboBox;
-            maSachLoaiSach = (int)combobox.SelectedValue;
+            if (combobox.SelectedValue != null && combobox.SelectedValue != DBNull.Value)
+            {
+                maSachLoaiSach = (int)combobox.SelectedValue;
+            }
         }
+
+        
+
+        
 
         //Xu ly loai sach
         private void initLoaiSach()
         {
             loadDgLoaiSach();
+            
+            // Thêm tính năng tìm kiếm cho Loại Sách
+            txtLoaiSachTenLoaiSach.TextChanged += txtLoaiSachTenLoaiSach_TextChanged;
         }
 
         private void loadDgLoaiSach()
@@ -264,6 +289,11 @@ namespace _23133021_Nguyen_Ngoc_Hai
         private void initHoaDon()
         {
             loadDgHoaDon();
+            
+            // Thêm tính năng tìm kiếm cho Hóa Đơn
+            txtHoaDonTenKH.TextChanged += txtHoaDonTenKH_TextChanged;
+            txtHoaDonSDTKH.TextChanged += txtHoaDonSDTKH_TextChanged;
+            dateNgayLapHoaDon.ValueChanged += dateNgayLapHoaDon_ValueChanged;
         }
 
         private void loadDgHoaDon()
@@ -385,6 +415,292 @@ namespace _23133021_Nguyen_Ngoc_Hai
         {
             FormChiTietHoaDon form = new FormChiTietHoaDon(maHoaDonHoaDon);
             form.ShowDialog();
+        }
+
+        // Tìm kiếm theo tên sách
+        private void txtSachTenSach_TextChanged(object sender, EventArgs e)
+        {
+            timKiemSachTheoTen();
+        }
+
+        // Tìm kiếm theo tác giả
+        private void txtSachTacGia_TextChanged(object sender, EventArgs e)
+        {
+            timKiemSachTheoTacGia();
+        }
+
+        // Tìm kiếm theo loại sách (ComboBox)
+        private void cbSachLoaiSach_TimKiem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            timKiemSachTheoLoai();
+        }
+
+        // Tìm kiếm theo tên loại sách
+        private void txtLoaiSachTenLoaiSach_TextChanged(object sender, EventArgs e)
+        {
+            timKiemLoaiSachTheoTen();
+        }
+
+        // Tìm kiếm theo tên khách hàng
+        private void txtHoaDonTenKH_TextChanged(object sender, EventArgs e)
+        {
+            timKiemHoaDonTheoTenKH();
+        }
+
+        // Tìm kiếm theo số điện thoại khách hàng
+        private void txtHoaDonSDTKH_TextChanged(object sender, EventArgs e)
+        {
+            timKiemHoaDonTheoSDT();
+        }
+
+        // Tìm kiếm theo ngày lập hóa đơn
+        private void dateNgayLapHoaDon_ValueChanged(object sender, EventArgs e)
+        {
+            timKiemHoaDonTheoNgay();
+        }
+
+        // Hàm tìm kiếm theo tên sách
+        private void timKiemSachTheoTen()
+        {
+            string tenSach = txtSachTenSach.Text.Trim();
+            
+            if (string.IsNullOrEmpty(tenSach))
+            {
+                loadDgSach();
+                return;
+            }
+
+            string safeKeyword = tenSach.Replace("'", "''");
+            string query = "SELECT * FROM vw_DanhSachSach WHERE [Tên Sách] LIKE N'%" + safeKeyword + "%'";
+
+            try
+            {
+                dgSach.DataSource = dataProvider.execQuery(query);
+            }
+            catch (Exception)
+            {
+                loadDgSach();
+            }
+        }
+
+        // Hàm tìm kiếm theo tác giả
+        private void timKiemSachTheoTacGia()
+        {
+            string tacGia = txtSachTacGia.Text.Trim();
+            
+            if (string.IsNullOrEmpty(tacGia))
+            {
+                loadDgSach();
+                return;
+            }
+
+            string safeKeyword = tacGia.Replace("'", "''");
+            string query = "SELECT * FROM vw_DanhSachSach WHERE [Tác Giả] LIKE N'%" + safeKeyword + "%'";
+
+            try
+            {
+                dgSach.DataSource = dataProvider.execQuery(query);
+            }
+            catch (Exception)
+            {
+                loadDgSach();
+            }
+        }
+
+        // Hàm tìm kiếm theo loại sách
+        private void timKiemSachTheoLoai()
+        {
+            if (cbSachLoaiSach.SelectedIndex < 0 || 
+                cbSachLoaiSach.SelectedValue == null || 
+                string.IsNullOrEmpty(cbSachLoaiSach.Text))
+            {
+                loadDgSach();
+                return;
+            }
+
+            string tenLoaiSach = cbSachLoaiSach.Text.Replace("'", "''");
+            string query = "SELECT * FROM vw_DanhSachSach WHERE [Tên Loại Sách] = N'" + tenLoaiSach + "'";
+
+            try
+            {
+                dgSach.DataSource = dataProvider.execQuery(query);
+            }
+            catch (Exception)
+            {
+                loadDgSach();
+            }
+        }
+
+        // Hàm tìm kiếm loại sách theo tên
+        private void timKiemLoaiSachTheoTen()
+        {
+            string tenLoaiSach = txtLoaiSachTenLoaiSach.Text.Trim();
+            
+            if (string.IsNullOrEmpty(tenLoaiSach))
+            {
+                loadDgLoaiSach();
+                return;
+            }
+
+            string query = "SELECT * FROM vw_DanhSachLoaiSach WHERE [Tên Loại Sách] LIKE N'%" + tenLoaiSach + "%'";
+
+            try
+            {
+                DataTable dt = dataProvider.execQuery(query);
+                dgLoaiSach.DataSource = dt;
+                
+                if (dt.Rows.Count > 0)
+                {
+                    maLoaiSachLoaiSach = (int)dt.Rows[0][0];
+                }
+            }
+            catch (Exception)
+            {
+                loadDgLoaiSach();
+            }
+        }
+
+        // Hàm tìm kiếm hóa đơn theo tên khách hàng
+        private void timKiemHoaDonTheoTenKH()
+        {
+            string tenKH = txtHoaDonTenKH.Text.Trim();
+            
+            if (string.IsNullOrEmpty(tenKH))
+            {
+                loadDgHoaDon();
+                return;
+            }
+
+            string query = "SELECT * FROM vw_DanhSachHoaDon WHERE [Tên Khách Hàng] LIKE N'%" + tenKH + "%'";
+
+            try
+            {
+                DataTable dt = dataProvider.execQuery(query);
+                dgHoaDon.DataSource = dt;
+                
+                if (dt.Rows.Count > 0)
+                {
+                    maHoaDonHoaDon = (int)dt.Rows[0][0];
+                }
+            }
+            catch (Exception)
+            {
+                loadDgHoaDon();
+            }
+        }
+
+        // Hàm tìm kiếm hóa đơn theo số điện thoại
+        private void timKiemHoaDonTheoSDT()
+        {
+            string sdt = txtHoaDonSDTKH.Text.Trim();
+            
+            if (string.IsNullOrEmpty(sdt))
+            {
+                loadDgHoaDon();
+                return;
+            }
+
+            string query = "SELECT * FROM vw_DanhSachHoaDon WHERE [Số Điện Thoại] LIKE '%" + sdt + "%'";
+
+            try
+            {
+                DataTable dt = dataProvider.execQuery(query);
+                dgHoaDon.DataSource = dt;
+                
+                if (dt.Rows.Count > 0)
+                {
+                    maHoaDonHoaDon = (int)dt.Rows[0][0];
+                }
+            }
+            catch (Exception)
+            {
+                loadDgHoaDon();
+            }
+        }
+
+        // Hàm tìm kiếm hóa đơn theo ngày lập
+        private void timKiemHoaDonTheoNgay()
+        {
+            DateTime ngayLap = dateNgayLapHoaDon.Value.Date;
+            
+            string query = "SELECT * FROM vw_DanhSachHoaDon WHERE CAST([Ngày Lập Hoá Đơn] AS DATE) = '" + ngayLap.ToString("yyyy-MM-dd") + "'";
+
+            try
+            {
+                DataTable dt = dataProvider.execQuery(query);
+                dgHoaDon.DataSource = dt;
+                
+                if (dt.Rows.Count > 0)
+                {
+                    maHoaDonHoaDon = (int)dt.Rows[0][0];
+                }
+            }
+            catch (Exception)
+            {
+                loadDgHoaDon();
+            }
+        }
+
+     
+        private void btnKhoiPhuc_Click(object sender, EventArgs e)
+        {
+            // Tạm thời tắt event để tránh tìm kiếm khi clear
+            txtSachTenSach.TextChanged -= txtSachTenSach_TextChanged;
+            txtSachTacGia.TextChanged -= txtSachTacGia_TextChanged;
+            cbSachLoaiSach.SelectedIndexChanged -= cbSachLoaiSach_TimKiem_SelectedIndexChanged;
+
+            // Clear tất cả TextBox - Tab Sách
+            txtSachTenSach.Text = "";
+            txtSachTacGia.Text = "";
+            cbSachLoaiSach.SelectedIndex = -1;
+
+            // Load lại dữ liệu sách
+            loadDgSach();
+
+            // Bật lại event
+            txtSachTenSach.TextChanged += txtSachTenSach_TextChanged;
+            txtSachTacGia.TextChanged += txtSachTacGia_TextChanged;
+            cbSachLoaiSach.SelectedIndexChanged += cbSachLoaiSach_TimKiem_SelectedIndexChanged;
+        }
+
+        
+
+        private void btnLoaiSachKhoiPhuc_Click(object sender, EventArgs e)
+        {
+            // Tạm thời tắt event để tránh tìm kiếm khi clear
+            txtLoaiSachTenLoaiSach.TextChanged -= txtLoaiSachTenLoaiSach_TextChanged;
+
+            // Clear TextBox - Tab Loại Sách
+            txtLoaiSachTenLoaiSach.Text = "";
+
+            // Load lại dữ liệu loại sách
+            loadDgLoaiSach();
+
+            // Bật lại event
+            txtLoaiSachTenLoaiSach.TextChanged += txtLoaiSachTenLoaiSach_TextChanged;
+        }
+
+        
+
+        private void btnHoaDonKhoiPhuc_Click(object sender, EventArgs e)
+        {
+            // Tạm thời tắt event để tránh tìm kiếm khi clear
+            txtHoaDonTenKH.TextChanged -= txtHoaDonTenKH_TextChanged;
+            txtHoaDonSDTKH.TextChanged -= txtHoaDonSDTKH_TextChanged;
+            dateNgayLapHoaDon.ValueChanged -= dateNgayLapHoaDon_ValueChanged;
+
+            // Clear TextBox và DateTimePicker - Tab Hóa Đơn
+            txtHoaDonTenKH.Text = "";
+            txtHoaDonSDTKH.Text = "";
+            dateNgayLapHoaDon.Value = DateTime.Now;
+
+            // Load lại dữ liệu hóa đơn
+            loadDgHoaDon();
+
+            // Bật lại event
+            txtHoaDonTenKH.TextChanged += txtHoaDonTenKH_TextChanged;
+            txtHoaDonSDTKH.TextChanged += txtHoaDonSDTKH_TextChanged;
+            dateNgayLapHoaDon.ValueChanged += dateNgayLapHoaDon_ValueChanged;
         }
     }
 }

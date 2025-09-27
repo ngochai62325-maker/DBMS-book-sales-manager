@@ -66,6 +66,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.dgHoaDon = new System.Windows.Forms.DataGridView();
+            this.btnKhoiPhuc = new System.Windows.Forms.Button();
+            this.btnLoaiSachKhoiPhuc = new System.Windows.Forms.Button();
+            this.btnHoaDonKhoiPhuc = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -106,6 +109,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnKhoiPhuc);
             this.panel1.Controls.Add(this.btnSachXoa);
             this.panel1.Controls.Add(this.btnSachSua);
             this.panel1.Controls.Add(this.btnSachThem);
@@ -127,32 +131,35 @@
             // 
             // btnSachXoa
             // 
-            this.btnSachXoa.Location = new System.Drawing.Point(895, 118);
+            this.btnSachXoa.BackColor = System.Drawing.Color.LightCoral;
+            this.btnSachXoa.Location = new System.Drawing.Point(1026, 118);
             this.btnSachXoa.Name = "btnSachXoa";
-            this.btnSachXoa.Size = new System.Drawing.Size(198, 38);
+            this.btnSachXoa.Size = new System.Drawing.Size(116, 38);
             this.btnSachXoa.TabIndex = 12;
             this.btnSachXoa.Text = "Xóa";
-            this.btnSachXoa.UseVisualStyleBackColor = true;
+            this.btnSachXoa.UseVisualStyleBackColor = false;
             this.btnSachXoa.Click += new System.EventHandler(this.btnSachXoa_Click);
             // 
             // btnSachSua
             // 
-            this.btnSachSua.Location = new System.Drawing.Point(467, 118);
+            this.btnSachSua.BackColor = System.Drawing.Color.Khaki;
+            this.btnSachSua.Location = new System.Drawing.Point(865, 118);
             this.btnSachSua.Name = "btnSachSua";
-            this.btnSachSua.Size = new System.Drawing.Size(198, 38);
+            this.btnSachSua.Size = new System.Drawing.Size(116, 38);
             this.btnSachSua.TabIndex = 11;
             this.btnSachSua.Text = "Sửa";
-            this.btnSachSua.UseVisualStyleBackColor = true;
+            this.btnSachSua.UseVisualStyleBackColor = false;
             this.btnSachSua.Click += new System.EventHandler(this.btnSachSua_Click);
             // 
             // btnSachThem
             // 
-            this.btnSachThem.Location = new System.Drawing.Point(43, 118);
+            this.btnSachThem.BackColor = System.Drawing.Color.LightGreen;
+            this.btnSachThem.Location = new System.Drawing.Point(700, 118);
             this.btnSachThem.Name = "btnSachThem";
-            this.btnSachThem.Size = new System.Drawing.Size(198, 38);
+            this.btnSachThem.Size = new System.Drawing.Size(116, 38);
             this.btnSachThem.TabIndex = 10;
             this.btnSachThem.Text = "Thêm";
-            this.btnSachThem.UseVisualStyleBackColor = true;
+            this.btnSachThem.UseVisualStyleBackColor = false;
             this.btnSachThem.Click += new System.EventHandler(this.btnSachThem_Click);
             // 
             // numSachGiaBan
@@ -273,6 +280,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnLoaiSachKhoiPhuc);
             this.panel2.Controls.Add(this.txtLoaiSachTenLoaiSach);
             this.panel2.Controls.Add(this.btnLoaiSachXoa);
             this.panel2.Controls.Add(this.btnLoaiSachSua);
@@ -286,45 +294,48 @@
             // 
             // txtLoaiSachTenLoaiSach
             // 
-            this.txtLoaiSachTenLoaiSach.Location = new System.Drawing.Point(164, 38);
+            this.txtLoaiSachTenLoaiSach.Location = new System.Drawing.Point(113, 38);
             this.txtLoaiSachTenLoaiSach.Name = "txtLoaiSachTenLoaiSach";
             this.txtLoaiSachTenLoaiSach.Size = new System.Drawing.Size(333, 22);
             this.txtLoaiSachTenLoaiSach.TabIndex = 13;
             // 
             // btnLoaiSachXoa
             // 
-            this.btnLoaiSachXoa.Location = new System.Drawing.Point(895, 101);
+            this.btnLoaiSachXoa.BackColor = System.Drawing.Color.LightCoral;
+            this.btnLoaiSachXoa.Location = new System.Drawing.Point(548, 101);
             this.btnLoaiSachXoa.Name = "btnLoaiSachXoa";
             this.btnLoaiSachXoa.Size = new System.Drawing.Size(198, 38);
             this.btnLoaiSachXoa.TabIndex = 12;
             this.btnLoaiSachXoa.Text = "Xóa";
-            this.btnLoaiSachXoa.UseVisualStyleBackColor = true;
+            this.btnLoaiSachXoa.UseVisualStyleBackColor = false;
             this.btnLoaiSachXoa.Click += new System.EventHandler(this.btnLoaiSachXoa_Click);
             // 
             // btnLoaiSachSua
             // 
-            this.btnLoaiSachSua.Location = new System.Drawing.Point(467, 101);
+            this.btnLoaiSachSua.BackColor = System.Drawing.Color.Khaki;
+            this.btnLoaiSachSua.Location = new System.Drawing.Point(293, 101);
             this.btnLoaiSachSua.Name = "btnLoaiSachSua";
             this.btnLoaiSachSua.Size = new System.Drawing.Size(198, 38);
             this.btnLoaiSachSua.TabIndex = 11;
             this.btnLoaiSachSua.Text = "Sửa";
-            this.btnLoaiSachSua.UseVisualStyleBackColor = true;
+            this.btnLoaiSachSua.UseVisualStyleBackColor = false;
             this.btnLoaiSachSua.Click += new System.EventHandler(this.btnLoaiSachSua_Click);
             // 
             // btnLoaiSachThem
             // 
+            this.btnLoaiSachThem.BackColor = System.Drawing.Color.LightGreen;
             this.btnLoaiSachThem.Location = new System.Drawing.Point(43, 101);
             this.btnLoaiSachThem.Name = "btnLoaiSachThem";
             this.btnLoaiSachThem.Size = new System.Drawing.Size(198, 38);
             this.btnLoaiSachThem.TabIndex = 10;
             this.btnLoaiSachThem.Text = "Thêm";
-            this.btnLoaiSachThem.UseVisualStyleBackColor = true;
+            this.btnLoaiSachThem.UseVisualStyleBackColor = false;
             this.btnLoaiSachThem.Click += new System.EventHandler(this.btnLoaiSachThem_Click);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(40, 41);
+            this.label8.Location = new System.Drawing.Point(13, 41);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(94, 16);
             this.label8.TabIndex = 4;
@@ -356,6 +367,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.btnHoaDonKhoiPhuc);
             this.panel3.Controls.Add(this.btnHoaDonChiTiet);
             this.panel3.Controls.Add(this.txtHoaDonSDTKH);
             this.panel3.Controls.Add(this.txtHoaDonTenKH);
@@ -374,7 +386,7 @@
             // 
             // btnHoaDonChiTiet
             // 
-            this.btnHoaDonChiTiet.Location = new System.Drawing.Point(822, 118);
+            this.btnHoaDonChiTiet.Location = new System.Drawing.Point(753, 118);
             this.btnHoaDonChiTiet.Name = "btnHoaDonChiTiet";
             this.btnHoaDonChiTiet.Size = new System.Drawing.Size(198, 38);
             this.btnHoaDonChiTiet.TabIndex = 17;
@@ -384,15 +396,15 @@
             // 
             // txtHoaDonSDTKH
             // 
-            this.txtHoaDonSDTKH.Location = new System.Drawing.Point(563, 60);
+            this.txtHoaDonSDTKH.Location = new System.Drawing.Point(582, 61);
             this.txtHoaDonSDTKH.Name = "txtHoaDonSDTKH";
-            this.txtHoaDonSDTKH.Size = new System.Drawing.Size(333, 22);
+            this.txtHoaDonSDTKH.Size = new System.Drawing.Size(128, 22);
             this.txtHoaDonSDTKH.TabIndex = 16;
             this.txtHoaDonSDTKH.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtHoaDonSDTKH_KeyPress);
             // 
             // txtHoaDonTenKH
             // 
-            this.txtHoaDonTenKH.Location = new System.Drawing.Point(116, 60);
+            this.txtHoaDonTenKH.Location = new System.Drawing.Point(118, 63);
             this.txtHoaDonTenKH.Name = "txtHoaDonTenKH";
             this.txtHoaDonTenKH.Size = new System.Drawing.Size(333, 22);
             this.txtHoaDonTenKH.TabIndex = 15;
@@ -400,7 +412,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(465, 66);
+            this.label6.Location = new System.Drawing.Point(484, 67);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(92, 16);
             this.label6.TabIndex = 14;
@@ -415,32 +427,35 @@
             // 
             // btnHoaDonXoa
             // 
-            this.btnHoaDonXoa.Location = new System.Drawing.Point(563, 118);
+            this.btnHoaDonXoa.BackColor = System.Drawing.Color.LightCoral;
+            this.btnHoaDonXoa.Location = new System.Drawing.Point(499, 118);
             this.btnHoaDonXoa.Name = "btnHoaDonXoa";
             this.btnHoaDonXoa.Size = new System.Drawing.Size(198, 38);
             this.btnHoaDonXoa.TabIndex = 12;
             this.btnHoaDonXoa.Text = "Xóa";
-            this.btnHoaDonXoa.UseVisualStyleBackColor = true;
+            this.btnHoaDonXoa.UseVisualStyleBackColor = false;
             this.btnHoaDonXoa.Click += new System.EventHandler(this.btnHoaDonXoa_Click);
             // 
             // btnHoaDonSua
             // 
-            this.btnHoaDonSua.Location = new System.Drawing.Point(304, 118);
+            this.btnHoaDonSua.BackColor = System.Drawing.Color.Khaki;
+            this.btnHoaDonSua.Location = new System.Drawing.Point(253, 118);
             this.btnHoaDonSua.Name = "btnHoaDonSua";
             this.btnHoaDonSua.Size = new System.Drawing.Size(198, 38);
             this.btnHoaDonSua.TabIndex = 11;
             this.btnHoaDonSua.Text = "Sửa";
-            this.btnHoaDonSua.UseVisualStyleBackColor = true;
+            this.btnHoaDonSua.UseVisualStyleBackColor = false;
             this.btnHoaDonSua.Click += new System.EventHandler(this.btnHoaDonSua_Click);
             // 
             // btnHoaDonThem
             // 
-            this.btnHoaDonThem.Location = new System.Drawing.Point(43, 118);
+            this.btnHoaDonThem.BackColor = System.Drawing.Color.LightGreen;
+            this.btnHoaDonThem.Location = new System.Drawing.Point(6, 118);
             this.btnHoaDonThem.Name = "btnHoaDonThem";
             this.btnHoaDonThem.Size = new System.Drawing.Size(198, 38);
             this.btnHoaDonThem.TabIndex = 10;
             this.btnHoaDonThem.Text = "Thêm";
-            this.btnHoaDonThem.UseVisualStyleBackColor = true;
+            this.btnHoaDonThem.UseVisualStyleBackColor = false;
             this.btnHoaDonThem.Click += new System.EventHandler(this.btnHoaDonThem_Click);
             // 
             // label10
@@ -472,6 +487,39 @@
             this.dgHoaDon.Size = new System.Drawing.Size(1143, 299);
             this.dgHoaDon.TabIndex = 2;
             this.dgHoaDon.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgHoaDon_CellClick);
+            // 
+            // btnKhoiPhuc
+            // 
+            this.btnKhoiPhuc.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnKhoiPhuc.Location = new System.Drawing.Point(532, 118);
+            this.btnKhoiPhuc.Name = "btnKhoiPhuc";
+            this.btnKhoiPhuc.Size = new System.Drawing.Size(116, 38);
+            this.btnKhoiPhuc.TabIndex = 13;
+            this.btnKhoiPhuc.Text = "Khôi phục";
+            this.btnKhoiPhuc.UseVisualStyleBackColor = false;
+            this.btnKhoiPhuc.Click += new System.EventHandler(this.btnKhoiPhuc_Click);
+            // 
+            // btnLoaiSachKhoiPhuc
+            // 
+            this.btnLoaiSachKhoiPhuc.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnLoaiSachKhoiPhuc.Location = new System.Drawing.Point(804, 101);
+            this.btnLoaiSachKhoiPhuc.Name = "btnLoaiSachKhoiPhuc";
+            this.btnLoaiSachKhoiPhuc.Size = new System.Drawing.Size(116, 38);
+            this.btnLoaiSachKhoiPhuc.TabIndex = 14;
+            this.btnLoaiSachKhoiPhuc.Text = "Khôi phục";
+            this.btnLoaiSachKhoiPhuc.UseVisualStyleBackColor = false;
+            this.btnLoaiSachKhoiPhuc.Click += new System.EventHandler(this.btnLoaiSachKhoiPhuc_Click);
+            // 
+            // btnHoaDonKhoiPhuc
+            // 
+            this.btnHoaDonKhoiPhuc.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnHoaDonKhoiPhuc.Location = new System.Drawing.Point(753, 56);
+            this.btnHoaDonKhoiPhuc.Name = "btnHoaDonKhoiPhuc";
+            this.btnHoaDonKhoiPhuc.Size = new System.Drawing.Size(116, 38);
+            this.btnHoaDonKhoiPhuc.TabIndex = 18;
+            this.btnHoaDonKhoiPhuc.Text = "Khôi phục";
+            this.btnHoaDonKhoiPhuc.UseVisualStyleBackColor = false;
+            this.btnHoaDonKhoiPhuc.Click += new System.EventHandler(this.btnHoaDonKhoiPhuc_Click);
             // 
             // FormMain
             // 
@@ -541,6 +589,9 @@
         private System.Windows.Forms.TextBox txtHoaDonSDTKH;
         private System.Windows.Forms.TextBox txtHoaDonTenKH;
         private System.Windows.Forms.Button btnHoaDonChiTiet;
+        private System.Windows.Forms.Button btnKhoiPhuc;
+        private System.Windows.Forms.Button btnLoaiSachKhoiPhuc;
+        private System.Windows.Forms.Button btnHoaDonKhoiPhuc;
     }
 }
 
