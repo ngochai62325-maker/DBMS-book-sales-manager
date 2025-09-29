@@ -15,7 +15,7 @@ CREATE TABLE Sach (
     MaSach INT PRIMARY KEY IDENTITY(1,1),
     TenSach NVARCHAR(200) NOT NULL,
     MaLoaiSach INT NOT NULL,
-    TacGia NVARCHAR(100),
+    TacGia NVARCHAR(100) NOT NULL,
     SoLuong INT CHECK (SoLuong >= 0),
     GiaBan DECIMAL(10,2) CHECK (GiaBan >= 0),
     FOREIGN KEY (MaLoaiSach) REFERENCES LoaiSach(MaLoaiSach)

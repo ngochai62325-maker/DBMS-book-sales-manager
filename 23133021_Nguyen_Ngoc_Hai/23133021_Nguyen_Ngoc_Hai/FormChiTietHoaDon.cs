@@ -13,6 +13,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
     public partial class FormChiTietHoaDon : Form
     {
         private int maHoaDon;
+        private int selectedMaSach; // Biến lưu mã sách được chọn ban đầu
         private DataProvider dataProvider = new DataProvider();
         
 
@@ -56,9 +57,22 @@ namespace _23133021_Nguyen_Ngoc_Hai
         // Load chi tiết hóa đơn (chỉ hiển thị sách đã mua của hóa đơn cụ thể)
         private void loadChiTietHoaDon()
         {
-            string query = "SELECT [Tên Sách], [Số Lượng], [Giá Bán], [Thành Tiền] " +
+            string query = "SELECT [Mã Sách], [Tên Sách], [Tác Giả], [Số Lượng], [Giá Bán], [Thành Tiền] " +
                           "FROM vw_ChiTietHoaDon WHERE [Mã Hóa Đơn] = " + maHoaDon;
-            dgChiTietHoaDon.DataSource = dataProvider.execQuery(query);
+            DataTable dt = dataProvider.execQuery(query);
+            dgChiTietHoaDon.DataSource = dt;
+            
+            // Ẩn cột Mã Sách vì người dùng không cần thấy
+            if (dgChiTietHoaDon.Columns.Count > 0)
+            {
+                dgChiTietHoaDon.Columns[0].Visible = false;
+            }
+            
+            // Khởi tạo selectedMaSach với dòng đầu tiên nếu có dữ liệu
+            if (dt.Rows.Count > 0)
+            {
+                selectedMaSach = Convert.ToInt32(dt.Rows[0][0]);
+            }
         }
 
         private void dgChiTietHoaDon_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -69,11 +83,20 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 DataGridViewRow row = dgChiTietHoaDon.Rows[rowID];
 
                 // Kiểm tra null trước khi gán giá trị
-                Sach.Text = row.Cells[0].Value?.ToString() ?? "";                // Tên Sách
+                // Cấu trúc cột: [Mã Sách], [Tên Sách], [Tác Giả], [Số Lượng], [Giá Bán], [Thành Tiền]
                 
-                if (row.Cells[1].Value != null && row.Cells[1].Value != DBNull.Value)
+                // Lưu Mã Sách được chọn
+                if (row.Cells[0].Value != null && row.Cells[0].Value != DBNull.Value)
                 {
-                    numSoLuongSach.Value = (int)row.Cells[1].Value;          // Số Lượng đã mua
+                    selectedMaSach = Convert.ToInt32(row.Cells[0].Value);
+                }
+                
+                Sach.Text = row.Cells[1].Value?.ToString() ?? "";                // Tên Sách
+                tacGia.Text = row.Cells[2].Value?.ToString() ?? "";              // Tác Giả
+                
+                if (row.Cells[3].Value != null && row.Cells[3].Value != DBNull.Value)
+                {
+                    numSoLuongSach.Value = (int)row.Cells[3].Value;          // Số Lượng đã mua (index 3)
                 }
                 else
                 {
@@ -87,25 +110,35 @@ namespace _23133021_Nguyen_Ngoc_Hai
             // Kiểm tra dữ liệu đầu vào
             if (string.IsNullOrEmpty(Sach.Text))
             {
-                MessageBox.Show("Vui lòng chọn sách!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập tên sách!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Sach.Focus();
+                return;
+            }
+
+            if (string.IsNullOrEmpty(tacGia.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tác giả!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tacGia.Focus();
                 return;
             }
 
             if (numSoLuongSach.Value <= 0)
             {
                 MessageBox.Show("Số lượng phải lớn hơn 0!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numSoLuongSach.Focus();
                 return;
             }
 
             try
             {
-                // Lấy mã sách từ tên sách
-                string getMaSachQuery = "SELECT MaSach FROM Sach WHERE TenSach = N'" + Sach.Text + "'";
+                // Lấy mã sách từ tên sách và tác giả để đảm bảo chính xác
+                string getMaSachQuery = "SELECT MaSach FROM Sach WHERE TenSach = N'" + Sach.Text.Trim().Replace("'", "''") + "' AND TacGia = N'" + tacGia.Text.Trim().Replace("'", "''") + "'";
                 var maSachResult = dataProvider.execScaler(getMaSachQuery);
                 
                 if (maSachResult == null)
                 {
-                    MessageBox.Show("Không tìm thấy sách!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Không tìm thấy sách với tên và tác giả này!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Sach.Focus();
                     return;
                 }
 
@@ -135,6 +168,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
 
                 // Clear form
                 Sach.Text = "";
+                tacGia.Text = "";
                 numSoLuongSach.Value = 1;
             }
             catch (Exception ex)
@@ -148,35 +182,40 @@ namespace _23133021_Nguyen_Ngoc_Hai
             // Kiểm tra dữ liệu đầu vào
             if (string.IsNullOrEmpty(Sach.Text))
             {
-                MessageBox.Show("Vui lòng chọn sách để sửa!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập tên sách!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Sach.Focus();
+                return;
+            }
+
+            if (string.IsNullOrEmpty(tacGia.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tác giả!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tacGia.Focus();
                 return;
             }
 
             if (numSoLuongSach.Value <= 0)
             {
                 MessageBox.Show("Số lượng phải lớn hơn 0!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numSoLuongSach.Focus();
+                return;
+            }
+
+            if (selectedMaSach <= 0)
+            {
+                MessageBox.Show("Vui lòng chọn một dòng để sửa!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             try
             {
-                // Lấy mã sách từ tên sách
-                string getMaSachQuery = "SELECT MaSach FROM Sach WHERE TenSach = N'" + Sach.Text + "'";
-                var maSachResult = dataProvider.execScaler(getMaSachQuery);
-                
-                if (maSachResult == null)
-                {
-                    MessageBox.Show("Không tìm thấy sách!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                int maSach = (int)maSachResult;
                 int soLuongMoi = (int)numSoLuongSach.Value;
 
-                // Cập nhật chi tiết hóa đơn
+                // Cập nhật chi tiết hóa đơn sử dụng selectedMaSach
+                // Không cần thay đổi sách, chỉ cập nhật số lượng
                 StringBuilder query = new StringBuilder("EXEC proc_CapNhatChiTietHoaDon");
                 query.Append(" @maHoaDon = " + maHoaDon);
-                query.Append(",@maSach = " + maSach);
+                query.Append(",@maSach = " + selectedMaSach);
                 query.Append(",@soLuongMoi = " + soLuongMoi);
 
                 int result = dataProvider.execNonQuery(query.ToString());
@@ -207,6 +246,12 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 return;
             }
 
+            if (selectedMaSach <= 0)
+            {
+                MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             DialogResult check = MessageBox.Show("Bạn có chắc muốn xóa sách '" + Sach.Text + "' khỏi hóa đơn?",
                                          "Cảnh Báo",
                                          MessageBoxButtons.YesNo,
@@ -216,22 +261,10 @@ namespace _23133021_Nguyen_Ngoc_Hai
             {
                 try
                 {
-                    // Lấy mã sách từ tên sách
-                    string getMaSachQuery = "SELECT MaSach FROM Sach WHERE TenSach = N'" + Sach.Text + "'";
-                    var maSachResult = dataProvider.execScaler(getMaSachQuery);
-                    
-                    if (maSachResult == null)
-                    {
-                        MessageBox.Show("Không tìm thấy sách!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    int maSach = (int)maSachResult;
-
-                    // Xóa chi tiết hóa đơn
+                    // Xóa chi tiết hóa đơn sử dụng selectedMaSach
                     StringBuilder query = new StringBuilder("EXEC proc_XoaChiTietHoaDon");
                     query.Append(" @maHoaDon = " + maHoaDon);
-                    query.Append(",@maSach = " + maSach);
+                    query.Append(",@maSach = " + selectedMaSach);
 
                     dataProvider.execNonQuery(query.ToString());
 
@@ -241,7 +274,9 @@ namespace _23133021_Nguyen_Ngoc_Hai
                     
                     // Clear form
                     Sach.Text = "";
+                    tacGia.Text = "";
                     numSoLuongSach.Value = 1;
+                    selectedMaSach = 0; // Reset selectedMaSach
                 }
                 catch (Exception ex)
                 {

@@ -45,7 +45,7 @@ select
 from HoaDon;
 go
 
--- View hiển thị chi tiết hóa đơn (chỉ hiển thị sách có trong chi tiết hóa đơn)
+-- View hiển thị chi tiết hóa đơn 
 create view vw_ChiTietHoaDon
 as
 select 
@@ -53,7 +53,7 @@ select
     ct.MaSach as [Mã Sách],
     s.TenSach as [Tên Sách],
     s.TacGia as [Tác Giả],
-    ct.SoLuong as [Số Lượng],  -- Số lượng trong chi tiết hóa đơn
+    ct.SoLuong as [Số Lượng],  
     s.GiaBan as [Giá Bán],
     dbo.fn_TinhThanhTien(ct.SoLuong, s.GiaBan) as [Thành Tiền]
 from ChiTietHoaDon ct

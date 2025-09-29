@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgChiTietHoaDon = new System.Windows.Forms.DataGridView();
             this.title = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -41,6 +41,8 @@
             this.btnSua = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
+            this.tacGia = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgChiTietHoaDon)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSoLuongSach)).BeginInit();
@@ -49,23 +51,23 @@
             // dgChiTietHoaDon
             // 
             this.dgChiTietHoaDon.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgChiTietHoaDon.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgChiTietHoaDon.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgChiTietHoaDon.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgChiTietHoaDon.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgChiTietHoaDon.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgChiTietHoaDon.Location = new System.Drawing.Point(12, 90);
             this.dgChiTietHoaDon.Name = "dgChiTietHoaDon";
             this.dgChiTietHoaDon.RowHeadersWidth = 51;
@@ -86,6 +88,8 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.tacGia);
+            this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.tongTien);
             this.panel3.Controls.Add(this.numSoLuongSach);
             this.panel3.Controls.Add(this.Sach);
@@ -111,7 +115,7 @@
             // 
             // numSoLuongSach
             // 
-            this.numSoLuongSach.Location = new System.Drawing.Point(498, 23);
+            this.numSoLuongSach.Location = new System.Drawing.Point(729, 26);
             this.numSoLuongSach.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -125,13 +129,13 @@
             // 
             this.Sach.Location = new System.Drawing.Point(74, 22);
             this.Sach.Name = "Sach";
-            this.Sach.Size = new System.Drawing.Size(333, 22);
+            this.Sach.Size = new System.Drawing.Size(255, 22);
             this.Sach.TabIndex = 15;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(428, 26);
+            this.label6.Location = new System.Drawing.Point(659, 29);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(64, 16);
             this.label6.TabIndex = 14;
@@ -176,6 +180,22 @@
             this.label10.TabIndex = 2;
             this.label10.Text = "Tên Sách";
             // 
+            // tacGia
+            // 
+            this.tacGia.Location = new System.Drawing.Point(415, 25);
+            this.tacGia.Name = "tacGia";
+            this.tacGia.Size = new System.Drawing.Size(214, 22);
+            this.tacGia.TabIndex = 19;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(344, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 16);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Tác giả";
+            // 
             // FormChiTietHoaDon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -209,5 +229,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.NumericUpDown numSoLuongSach;
         private System.Windows.Forms.Label tongTien;
+        private System.Windows.Forms.TextBox tacGia;
+        private System.Windows.Forms.Label label1;
     }
 }

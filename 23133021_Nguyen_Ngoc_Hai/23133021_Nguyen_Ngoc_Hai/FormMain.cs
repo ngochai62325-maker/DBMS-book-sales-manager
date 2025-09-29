@@ -16,8 +16,11 @@ namespace _23133021_Nguyen_Ngoc_Hai
         private DataProvider dataProvider = new DataProvider();
         private int maSachLoaiSach;
         private int maSachSach;
+        private int selectedMaSachSach; // Biến lưu ID sách được chọn ban đầu
         private int maLoaiSachLoaiSach;
+        private int selectedMaLoaiSachLoaiSach; // Biến lưu ID loại sách được chọn ban đầu
         private int maHoaDonHoaDon;
+        private int selectedMaHoaDonHoaDon; // Biến lưu ID hóa đơn được chọn ban đầu
 
         public FormMain()
         {
@@ -56,6 +59,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 if (dt.Rows.Count > 0)
                 {
                     maSachSach = (int)dt.Rows[0][0];
+                    selectedMaSachSach = maSachSach; // Khởi tạo giá trị mặc định
                 }
             }
             catch (Exception ex)
@@ -89,6 +93,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 if (row.Cells[0].Value != null && row.Cells[0].Value != DBNull.Value)
                 {
                     maSachSach = (int)row.Cells[0].Value;
+                    selectedMaSachSach = maSachSach; // Cập nhật ID được chọn
                 }
 
                 txtSachTenSach.Text = row.Cells[1].Value?.ToString() ?? "";
@@ -128,15 +133,71 @@ namespace _23133021_Nguyen_Ngoc_Hai
 
         private void btnSachThem_Click(object sender, EventArgs e)
         {
-            StringBuilder query = new StringBuilder("EXEC proc_ThemSach");
-            query.Append(" @tenSach = N'" + txtSachTenSach.Text + "'");
-            query.Append(",@maLoaiSach = " + maSachLoaiSach);
-            query.Append(",@tacGia = N'" + txtSachTacGia.Text + "'");
-            query.Append(",@soLuong = " + numSachSoLuong.Value);
-            query.Append(",@giaBan = " + numSachGiaBan.Value);
+            // Validate dữ liệu đầu vào
+            if (string.IsNullOrWhiteSpace(txtSachTenSach.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tên sách!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSachTenSach.Focus();
+                return;
+            }
 
+            if (maSachLoaiSach <= 0)
+            {
+                MessageBox.Show("Vui lòng chọn loại sách!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbSachLoaiSach.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtSachTacGia.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tác giả!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSachTacGia.Focus();
+                return;
+            }
+
+            if (numSachSoLuong.Value <= 0)
+            {
+                MessageBox.Show("Số lượng phải lớn hơn 0!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numSachSoLuong.Focus();
+                return;
+            }
+
+            if (numSachGiaBan.Value <= 0)
+            {
+                MessageBox.Show("Giá bán phải lớn hơn 0!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numSachGiaBan.Focus();
+                return;
+            }
+
+            // Kiểm tra trùng sách trước khi thêm
+            string newTenSach = txtSachTenSach.Text.Trim();
+            string newTacGia = txtSachTacGia.Text.Trim();
+            int newMaLoaiSach = maSachLoaiSach;
+            
+            string checkQuery = "SELECT COUNT(*) FROM Sach WHERE " +
+                               "UPPER(LTRIM(RTRIM(TenSach))) = UPPER(N'" + newTenSach.Replace("'", "''") + "') AND " +
+                               "UPPER(LTRIM(RTRIM(TacGia))) = UPPER(N'" + newTacGia.Replace("'", "''") + "') AND " +
+                               "MaLoaiSach = " + newMaLoaiSach;
+            
             try
             {
+                var checkResult = dataProvider.execScaler(checkQuery);
+                int duplicateCount = Convert.ToInt32(checkResult ?? 0);
+                
+                if (duplicateCount > 0)
+                {
+                    MessageBox.Show("Sách với tên, tác giả và loại sách này đã tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSachTenSach.Focus();
+                    return;
+                }
+
+                StringBuilder query = new StringBuilder("EXEC proc_ThemSach");
+                query.Append(" @tenSach = N'" + newTenSach.Replace("'", "''") + "'");
+                query.Append(",@maLoaiSach = " + newMaLoaiSach);
+                query.Append(",@tacGia = N'" + newTacGia.Replace("'", "''") + "'");
+                query.Append(",@soLuong = " + numSachSoLuong.Value);
+                query.Append(",@giaBan = " + numSachGiaBan.Value);
+
                 dataProvider.execNonQuery(query.ToString());
                 loadDgSach();
                 MessageBox.Show("Thêm sách thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -149,24 +210,89 @@ namespace _23133021_Nguyen_Ngoc_Hai
 
         private void btnSachSua_Click(object sender, EventArgs e)
         {
-            StringBuilder query = new StringBuilder("EXEC proc_CapNhatSach");
-            query.Append(" @maSach = " + maSachSach);
-            query.Append(",@tenSach = N'" + txtSachTenSach.Text + "'");
-            query.Append(",@maLoaiSach = " + maSachLoaiSach);
-            query.Append(",@tacGia = N'" + txtSachTacGia.Text + "'");
-            query.Append(",@soLuong = " + numSachSoLuong.Value);
-            query.Append(",@giaBan = " + numSachGiaBan.Value);
-
-            int result = dataProvider.execNonQuery(query.ToString());
-
-            if (result > 0)
+            // Validate dữ liệu đầu vào
+            if (string.IsNullOrWhiteSpace(txtSachTenSach.Text))
             {
-                loadDgSach();
-                MessageBox.Show("Cập nhật sách thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show("Vui lòng nhập tên sách!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSachTenSach.Focus();
+                return;
             }
-            else
+
+            if (maSachLoaiSach <= 0)
             {
-                MessageBox.Show("Cập nhật sách không thành công!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Vui lòng chọn loại sách!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbSachLoaiSach.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtSachTacGia.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tác giả!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSachTacGia.Focus();
+                return;
+            }
+
+            if (numSachSoLuong.Value < 0)
+            {
+                MessageBox.Show("Số lượng phải lớn hơn hoặc bằng 0!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numSachSoLuong.Focus();
+                return;
+            }
+
+            if (numSachGiaBan.Value <= 0)
+            {
+                MessageBox.Show("Giá bán phải lớn hơn 0!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numSachGiaBan.Focus();
+                return;
+            }
+
+            // Kiểm tra trùng sách trước khi gọi stored procedure
+            string newTenSach = txtSachTenSach.Text.Trim();
+            string newTacGia = txtSachTacGia.Text.Trim();
+            int newMaLoaiSach = maSachLoaiSach;
+            
+            string checkQuery = "SELECT COUNT(*) FROM Sach WHERE " +
+                               "UPPER(LTRIM(RTRIM(TenSach))) = UPPER(N'" + newTenSach.Replace("'", "''") + "') AND " +
+                               "UPPER(LTRIM(RTRIM(TacGia))) = UPPER(N'" + newTacGia.Replace("'", "''") + "') AND " +
+                               "MaLoaiSach = " + newMaLoaiSach + " AND " +
+                               "MaSach != " + selectedMaSachSach;
+            
+            try
+            {
+                var checkResult = dataProvider.execScaler(checkQuery);
+                int duplicateCount = Convert.ToInt32(checkResult ?? 0);
+                
+                if (duplicateCount > 0)
+                {
+                    MessageBox.Show("Sách với tên, tác giả và loại sách này đã tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSachTenSach.Focus();
+                    return;
+                }
+
+                // Nếu không trùng thì thực hiện cập nhật (sử dụng selectedMaSachSach)
+                StringBuilder query = new StringBuilder("EXEC proc_CapNhatSach");
+                query.Append(" @maSach = " + selectedMaSachSach);
+                query.Append(",@tenSach = N'" + newTenSach.Replace("'", "''") + "'");
+                query.Append(",@maLoaiSach = " + newMaLoaiSach);
+                query.Append(",@tacGia = N'" + newTacGia.Replace("'", "''") + "'");
+                query.Append(",@soLuong = " + numSachSoLuong.Value);
+                query.Append(",@giaBan = " + numSachGiaBan.Value);
+
+                int result = dataProvider.execNonQuery(query.ToString());
+
+                if (result > 0)
+                {
+                    loadDgSach();
+                    MessageBox.Show("Cập nhật sách thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật sách không thành công!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Cập nhật sách không thành công! " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -182,7 +308,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 try
                 {
                     StringBuilder query = new StringBuilder("EXEC proc_XoaSach");
-                    query.Append(" @maSach = " + maSachSach);
+                    query.Append(" @maSach = " + selectedMaSachSach);
 
                     dataProvider.execNonQuery(query.ToString());
 
@@ -224,7 +350,11 @@ namespace _23133021_Nguyen_Ngoc_Hai
             dt = dataProvider.execQuery("SELECT * FROM vw_DanhSachLoaiSach");
             dgLoaiSach.DataSource = dt;
 
-            maLoaiSachLoaiSach = (int)dt.Rows[0][0];
+            if (dt.Rows.Count > 0)
+            {
+                maLoaiSachLoaiSach = (int)dt.Rows[0][0];
+                selectedMaLoaiSachLoaiSach = maLoaiSachLoaiSach; // Khởi tạo giá trị mặc định
+            }
         }
 
         private void dgLoaiSach_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -241,6 +371,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 if (row.Cells[0].Value != null && row.Cells[0].Value != DBNull.Value)
                 {
                     maLoaiSachLoaiSach = (int)row.Cells[0].Value;
+                    selectedMaLoaiSachLoaiSach = maLoaiSachLoaiSach; // Cập nhật ID được chọn
                 }
 
                 txtLoaiSachTenLoaiSach.Text = row.Cells[1].Value?.ToString() ?? "";
@@ -252,8 +383,16 @@ namespace _23133021_Nguyen_Ngoc_Hai
 
         private void btnLoaiSachThem_Click(object sender, EventArgs e)
         {
+            // Validate dữ liệu đầu vào
+            if (string.IsNullOrWhiteSpace(txtLoaiSachTenLoaiSach.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tên loại sách!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtLoaiSachTenLoaiSach.Focus();
+                return;
+            }
+
             StringBuilder query = new StringBuilder("EXEC proc_ThemLoaiSach");
-            query.Append(" @tenLoaiSach = N'" + txtLoaiSachTenLoaiSach.Text + "'");
+            query.Append(" @tenLoaiSach = N'" + txtLoaiSachTenLoaiSach.Text.Trim() + "'");
 
             try
             {
@@ -281,22 +420,52 @@ namespace _23133021_Nguyen_Ngoc_Hai
 
         private void btnLoaiSachSua_Click(object sender, EventArgs e)
         {
-            StringBuilder query = new StringBuilder("EXEC proc_CapNhatLoaiSach");
-            query.Append(" @tenLoaiSach = N'" + txtLoaiSachTenLoaiSach.Text + "'");
-            query.Append(",@maLoaiSach = " + maLoaiSachLoaiSach);
-
-            int result = dataProvider.execNonQuery(query.ToString());
-
-            if (result > 0)
+            // Validate dữ liệu đầu vào
+            if (string.IsNullOrWhiteSpace(txtLoaiSachTenLoaiSach.Text))
             {
-                loadDgLoaiSach();
-                loadDgSach();
-                loadcbSachLoaiSach();
-                MessageBox.Show("Cập nhật loại sách thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show("Vui lòng nhập tên loại sách!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtLoaiSachTenLoaiSach.Focus();
+                return;
             }
-            else
+
+            // Kiểm tra trùng tên trước khi gọi stored procedure
+            string newName = txtLoaiSachTenLoaiSach.Text.Trim();
+            string checkQuery = "SELECT COUNT(*) FROM LoaiSach WHERE UPPER(LTRIM(RTRIM(TenLoaiSach))) = UPPER(N'" + newName + "') AND MaLoaiSach != " + selectedMaLoaiSachLoaiSach;
+            
+            try
             {
-                MessageBox.Show("Cập nhật loại sách không thành công!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var checkResult = dataProvider.execScaler(checkQuery);
+                int duplicateCount = Convert.ToInt32(checkResult ?? 0);
+                
+                if (duplicateCount > 0)
+                {
+                    MessageBox.Show("Tên loại sách đã tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtLoaiSachTenLoaiSach.Focus();
+                    return;
+                }
+
+                // Nếu không trùng thì thực hiện cập nhật (sử dụng selectedMaLoaiSachLoaiSach thay vì maLoaiSachLoaiSach)
+                StringBuilder query = new StringBuilder("EXEC proc_CapNhatLoaiSach");
+                query.Append(" @tenLoaiSach = N'" + newName + "'");
+                query.Append(",@maLoaiSach = " + selectedMaLoaiSachLoaiSach);
+
+                int result = dataProvider.execNonQuery(query.ToString());
+
+                if (result > 0)
+                {
+                    loadDgLoaiSach();
+                    loadDgSach();
+                    loadcbSachLoaiSach();
+                    MessageBox.Show("Cập nhật loại sách thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật loại sách không thành công!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Cập nhật loại sách không thành công! " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -312,7 +481,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 try
                 {
                     StringBuilder query = new StringBuilder("EXEC proc_XoaLoaiSach");
-                    query.Append(" @maLoaiSach = " + maLoaiSachLoaiSach);
+                    query.Append(" @maLoaiSach = " + selectedMaLoaiSachLoaiSach);
 
                     dataProvider.execNonQuery(query.ToString());
 
@@ -344,7 +513,15 @@ namespace _23133021_Nguyen_Ngoc_Hai
             dt = dataProvider.execQuery("SELECT * FROM vw_DanhSachHoaDon");
             dgHoaDon.DataSource = dt;
 
-            maHoaDonHoaDon = (int)dt.Rows[0][0];
+            // Chỉ khởi tạo selectedMaHoaDonHoaDon nếu chưa có giá trị hoặc bằng 0
+            if (dt.Rows.Count > 0)
+            {
+                maHoaDonHoaDon = (int)dt.Rows[0][0];
+                if (selectedMaHoaDonHoaDon <= 0)
+                {
+                    selectedMaHoaDonHoaDon = maHoaDonHoaDon; // Chỉ khởi tạo lần đầu
+                }
+            }
         }
 
         private void dgHoaDon_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -363,6 +540,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 if (row.Cells[0].Value != null && row.Cells[0].Value != DBNull.Value)
                 {
                     maHoaDonHoaDon = (int)row.Cells[0].Value;
+                    selectedMaHoaDonHoaDon = maHoaDonHoaDon; // Cập nhật ID được chọn
                 }
 
                 if (row.Cells[1].Value != null && row.Cells[1].Value != DBNull.Value)
@@ -393,10 +571,49 @@ namespace _23133021_Nguyen_Ngoc_Hai
 
         private void btnHoaDonThem_Click(object sender, EventArgs e)
         {
+            // Validate dữ liệu đầu vào
+            if (string.IsNullOrWhiteSpace(txtHoaDonTenKH.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tên khách hàng!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtHoaDonTenKH.Focus();
+                return;
+            }
+
+            // Kiểm tra trùng hóa đơn trước khi thêm
+            DateTime newNgayLap = dateNgayLapHoaDon.Value.Date;
+            string newSDT = txtHoaDonSDTKH.Text.Trim();
+            
+            // Chỉ kiểm tra trùng nếu có số điện thoại
+            if (!string.IsNullOrEmpty(newSDT))
+            {
+                string checkQuery = "SELECT COUNT(*) FROM HoaDon WHERE " +
+                                   "CAST(NgayLapHoaDon AS DATE) = '" + newNgayLap.ToString("yyyy-MM-dd") + "' AND " +
+                                   "LTRIM(RTRIM(SDT)) = '" + newSDT.Replace("'", "''") + "'";
+                
+                try
+                {
+                    var checkResult = dataProvider.execScaler(checkQuery);
+                    int duplicateCount = Convert.ToInt32(checkResult ?? 0);
+                    
+                    if (duplicateCount > 0)
+                    {
+                        MessageBox.Show("Đã tồn tại hóa đơn trong ngày " + newNgayLap.ToString("dd/MM/yyyy") + 
+                                       " cho số điện thoại " + newSDT + "!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        txtHoaDonSDTKH.Focus();
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi kiểm tra trùng hóa đơn! " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
             StringBuilder query = new StringBuilder("EXEC proc_ThemHoaDon");
             query.Append(" @ngayLapHoaDon = '" + dateNgayLapHoaDon.Value + "'");
-            query.Append(",@tenKhachHang = N'" + txtHoaDonTenKH.Text + "'");
-            query.Append(",@sdtKhachHang = '" + txtHoaDonSDTKH.Text + "'");
+            query.Append(",@tenKhachHang = N'" + txtHoaDonTenKH.Text.Trim().Replace("'", "''") + "'");
+            query.Append(",@sdtKhachHang = '" + newSDT.Replace("'", "''") + "'");
 
             try
             {
@@ -423,28 +640,76 @@ namespace _23133021_Nguyen_Ngoc_Hai
 
         private void btnHoaDonSua_Click(object sender, EventArgs e)
         {
+            // Validate dữ liệu đầu vào
+            if (string.IsNullOrWhiteSpace(txtHoaDonTenKH.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tên khách hàng!", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtHoaDonTenKH.Focus();
+                return;
+            }
+
+            // Kiểm tra trùng hóa đơn trước khi gọi stored procedure
+            DateTime newNgayLap = dateNgayLapHoaDon.Value.Date;
+            string newSDT = txtHoaDonSDTKH.Text.Trim();
+            
+            // Chỉ kiểm tra trùng nếu có số điện thoại
+            if (!string.IsNullOrEmpty(newSDT))
+            {
+                string checkQuery = "SELECT COUNT(*) FROM HoaDon WHERE " +
+                                   "CAST(NgayLapHoaDon AS DATE) = '" + newNgayLap.ToString("yyyy-MM-dd") + "' AND " +
+                                   "LTRIM(RTRIM(SDT)) = '" + newSDT.Replace("'", "''") + "' AND " +
+                                   "MaHoaDon != " + selectedMaHoaDonHoaDon;
+                
+                try
+                {
+                    var checkResult = dataProvider.execScaler(checkQuery);
+                    int duplicateCount = Convert.ToInt32(checkResult ?? 0);
+                    
+                    if (duplicateCount > 0)
+                    {
+                        MessageBox.Show("Đã tồn tại hóa đơn trong ngày " + newNgayLap.ToString("dd/MM/yyyy") + 
+                                       " cho số điện thoại " + newSDT + "!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        txtHoaDonSDTKH.Focus();
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi kiểm tra trùng hóa đơn! " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            // Nếu không trùng thì thực hiện cập nhật
             StringBuilder query = new StringBuilder("EXEC proc_CapNhatHoaDon");
             query.Append(" @ngayLapHoaDon = '" + dateNgayLapHoaDon.Value + "'");
-            query.Append(",@tenKhachHang = N'" + txtHoaDonTenKH.Text + "'");
-            query.Append(",@sdtKhachHang = '" + txtHoaDonSDTKH.Text + "'");
-            query.Append(",@maHoaDon = " + maHoaDonHoaDon);
+            query.Append(",@tenKhachHang = N'" + txtHoaDonTenKH.Text.Trim().Replace("'", "''") + "'");
+            query.Append(",@sdtKhachHang = '" + newSDT.Replace("'", "''") + "'");
+            query.Append(",@maHoaDon = " + selectedMaHoaDonHoaDon);
 
-            int result = dataProvider.execNonQuery(query.ToString());
-
-            if (result > 0)
+            try
             {
-                loadDgHoaDon();
-                MessageBox.Show("Cập nhật hóa đơn thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                int result = dataProvider.execNonQuery(query.ToString());
+
+                if (result > 0)
+                {
+                    loadDgHoaDon();
+                    MessageBox.Show("Cập nhật hóa đơn thành công!", "Thành Công", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật hóa đơn không thành công!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Cập nhật hóa đơn không thành công!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Cập nhật hóa đơn không thành công! " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnHoaDonXoa_Click(object sender, EventArgs e)
         {
-            DialogResult check = MessageBox.Show("Bạn có chắc muốn xóa hóa đơn có mã là " + maHoaDonHoaDon + " ?",
+            DialogResult check = MessageBox.Show("Bạn có chắc muốn xóa hóa đơn có mã là " + selectedMaHoaDonHoaDon + " ?",
                                          "Cảnh Báo",
                                          MessageBoxButtons.YesNo,
                                          MessageBoxIcon.Question);
@@ -454,7 +719,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
                 try
                 {
                     StringBuilder query = new StringBuilder("EXEC proc_XoaHoaDon");
-                    query.Append(" @maHoaDon = " + maHoaDonHoaDon);
+                    query.Append(" @maHoaDon = " + selectedMaHoaDonHoaDon);
 
                     dataProvider.execNonQuery(query.ToString());
 
@@ -485,7 +750,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
 
         private void btnHoaDonChiTiet_Click(object sender, EventArgs e)
         {
-            FormChiTietHoaDon form = new FormChiTietHoaDon(maHoaDonHoaDon);
+            FormChiTietHoaDon form = new FormChiTietHoaDon(selectedMaHoaDonHoaDon);
             form.ShowDialog();
         }
 
@@ -536,18 +801,12 @@ namespace _23133021_Nguyen_Ngoc_Hai
         {
             string tenSach = txtSachTenSach.Text.Trim();
             
-            if (string.IsNullOrEmpty(tenSach))
-            {
-                loadDgSach();
-                return;
-            }
-
-            string safeKeyword = tenSach.Replace("'", "''");
-            string query = "SELECT * FROM vw_DanhSachSach WHERE [Tên Sách] LIKE N'%" + safeKeyword + "%'";
-
             try
             {
+                string query = "SELECT * FROM fn_TimKiemSachTheoTen(N'" + tenSach.Replace("'", "''") + "')";
                 dgSach.DataSource = dataProvider.execQuery(query);
+                // KHÔNG cập nhật selectedMaSachSach khi tìm kiếm
+                // Chỉ cập nhật khi user thực sự click vào một dòng
             }
             catch (Exception)
             {
@@ -560,18 +819,11 @@ namespace _23133021_Nguyen_Ngoc_Hai
         {
             string tacGia = txtSachTacGia.Text.Trim();
             
-            if (string.IsNullOrEmpty(tacGia))
-            {
-                loadDgSach();
-                return;
-            }
-
-            string safeKeyword = tacGia.Replace("'", "''");
-            string query = "SELECT * FROM vw_DanhSachSach WHERE [Tác Giả] LIKE N'%" + safeKeyword + "%'";
-
             try
             {
+                string query = "SELECT * FROM fn_TimKiemSachTheoTacGia(N'" + tacGia.Replace("'", "''") + "')";
                 dgSach.DataSource = dataProvider.execQuery(query);
+                // KHÔNG cập nhật selectedMaSachSach khi tìm kiếm
             }
             catch (Exception)
             {
@@ -582,20 +834,20 @@ namespace _23133021_Nguyen_Ngoc_Hai
         // Hàm tìm kiếm theo loại sách
         private void timKiemSachTheoLoai()
         {
-            if (cbSachLoaiSach.SelectedIndex < 0 || 
-                cbSachLoaiSach.SelectedValue == null || 
-                string.IsNullOrEmpty(cbSachLoaiSach.Text))
+            string tenLoaiSach = "";
+            
+            if (cbSachLoaiSach.SelectedIndex >= 0 && 
+                cbSachLoaiSach.SelectedValue != null && 
+                !string.IsNullOrEmpty(cbSachLoaiSach.Text))
             {
-                loadDgSach();
-                return;
+                tenLoaiSach = cbSachLoaiSach.Text.Replace("'", "''");
             }
-
-            string tenLoaiSach = cbSachLoaiSach.Text.Replace("'", "''");
-            string query = "SELECT * FROM vw_DanhSachSach WHERE [Tên Loại Sách] = N'" + tenLoaiSach + "'";
 
             try
             {
+                string query = "SELECT * FROM fn_TimKiemSachTheoLoai(N'" + tenLoaiSach + "')";
                 dgSach.DataSource = dataProvider.execQuery(query);
+                // KHÔNG cập nhật selectedMaSachSach khi tìm kiếm
             }
             catch (Exception)
             {
@@ -608,23 +860,11 @@ namespace _23133021_Nguyen_Ngoc_Hai
         {
             string tenLoaiSach = txtLoaiSachTenLoaiSach.Text.Trim();
             
-            if (string.IsNullOrEmpty(tenLoaiSach))
-            {
-                loadDgLoaiSach();
-                return;
-            }
-
-            string query = "SELECT * FROM vw_DanhSachLoaiSach WHERE [Tên Loại Sách] LIKE N'%" + tenLoaiSach + "%'";
-
             try
             {
+                string query = "SELECT * FROM fn_TimKiemLoaiSachTheoTen(N'" + tenLoaiSach.Replace("'", "''") + "')";
                 DataTable dt = dataProvider.execQuery(query);
                 dgLoaiSach.DataSource = dt;
-                
-                if (dt.Rows.Count > 0)
-                {
-                    maLoaiSachLoaiSach = (int)dt.Rows[0][0];
-                }
             }
             catch (Exception)
             {
@@ -637,23 +877,11 @@ namespace _23133021_Nguyen_Ngoc_Hai
         {
             string tenKH = txtHoaDonTenKH.Text.Trim();
             
-            if (string.IsNullOrEmpty(tenKH))
-            {
-                loadDgHoaDon();
-                return;
-            }
-
-            string query = "SELECT * FROM vw_DanhSachHoaDon WHERE [Tên Khách Hàng] LIKE N'%" + tenKH + "%'";
-
             try
             {
+                string query = "SELECT * FROM fn_TimKiemHoaDonTheoTenKH(N'" + tenKH.Replace("'", "''") + "')";
                 DataTable dt = dataProvider.execQuery(query);
                 dgHoaDon.DataSource = dt;
-                
-                if (dt.Rows.Count > 0)
-                {
-                    maHoaDonHoaDon = (int)dt.Rows[0][0];
-                }
             }
             catch (Exception)
             {
@@ -666,23 +894,13 @@ namespace _23133021_Nguyen_Ngoc_Hai
         {
             string sdt = txtHoaDonSDTKH.Text.Trim();
             
-            if (string.IsNullOrEmpty(sdt))
-            {
-                loadDgHoaDon();
-                return;
-            }
-
-            string query = "SELECT * FROM vw_DanhSachHoaDon WHERE [Số Điện Thoại] LIKE '%" + sdt + "%'";
-
             try
             {
+                string query = "SELECT * FROM fn_TimKiemHoaDonTheoSDT('" + sdt.Replace("'", "''") + "')";
                 DataTable dt = dataProvider.execQuery(query);
                 dgHoaDon.DataSource = dt;
                 
-                if (dt.Rows.Count > 0)
-                {
-                    maHoaDonHoaDon = (int)dt.Rows[0][0];
-                }
+                // KHÔNG cập nhật selectedMaHoaDonHoaDon khi tìm kiếm
             }
             catch (Exception)
             {
@@ -695,17 +913,11 @@ namespace _23133021_Nguyen_Ngoc_Hai
         {
             DateTime ngayLap = dateNgayLapHoaDon.Value.Date;
             
-            string query = "SELECT * FROM vw_DanhSachHoaDon WHERE CAST([Ngày Lập Hoá Đơn] AS DATE) = '" + ngayLap.ToString("yyyy-MM-dd") + "'";
-
             try
             {
+                string query = "SELECT * FROM fn_TimKiemHoaDonTheoNgay('" + ngayLap.ToString("yyyy-MM-dd") + "')";
                 DataTable dt = dataProvider.execQuery(query);
                 dgHoaDon.DataSource = dt;
-                
-                if (dt.Rows.Count > 0)
-                {
-                    maHoaDonHoaDon = (int)dt.Rows[0][0];
-                }
             }
             catch (Exception)
             {
