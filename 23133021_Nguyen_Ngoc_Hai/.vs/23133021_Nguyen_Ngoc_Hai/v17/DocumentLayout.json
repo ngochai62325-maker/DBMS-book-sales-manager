@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|c:\\windows application\\dbms\\dbms-book-sales-manager\\23133021_nguyen_ngoc_hai\\23133021_nguyen_ngoc_hai\\formlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|solutionrelative:23133021_nguyen_ngoc_hai\\formlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|c:\\windows application\\dbms\\dbms-book-sales-manager\\23133021_nguyen_ngoc_hai\\23133021_nguyen_ngoc_hai\\formlogin.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|solutionrelative:23133021_nguyen_ngoc_hai\\formlogin.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_nguyen_ngoc_hai\\dataprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|solutionrelative:23133021_nguyen_ngoc_hai\\dataprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|c:\\windows application\\dbms\\dbms-book-sales-manager\\23133021_nguyen_ngoc_hai\\23133021_nguyen_ngoc_hai\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|solutionrelative:23133021_nguyen_ngoc_hai\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -19,10 +31,6 @@
       "RelativeMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|solutionrelative:23133021_nguyen_ngoc_hai\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_nguyen_ngoc_hai\\dataprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|solutionrelative:23133021_nguyen_ngoc_hai\\dataprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_nguyen_ngoc_hai\\formmain.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39D68197-5D82-4561-A703-01E5609E5630}|23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai.csproj|solutionrelative:23133021_nguyen_ngoc_hai\\formmain.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -34,8 +42,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FormLogin.cs [Design]",
+              "DocumentMoniker": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormLogin.cs",
+              "RelativeDocumentMoniker": "23133021_Nguyen_Ngoc_Hai\\FormLogin.cs",
+              "ToolTip": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormLogin.cs [Design]",
+              "RelativeToolTip": "23133021_Nguyen_Ngoc_Hai\\FormLogin.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T11:53:48.132Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{08a1bf1d-7967-4afc-8253-1790862ab8c9}"
@@ -50,32 +74,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "FormLogin.Designer.cs",
+              "DocumentMoniker": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormLogin.Designer.cs",
+              "RelativeDocumentMoniker": "23133021_Nguyen_Ngoc_Hai\\FormLogin.Designer.cs",
+              "ToolTip": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormLogin.Designer.cs",
+              "RelativeToolTip": "23133021_Nguyen_Ngoc_Hai\\FormLogin.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T11:53:44.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "FormMain.cs",
               "DocumentMoniker": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormMain.cs",
               "RelativeDocumentMoniker": "23133021_Nguyen_Ngoc_Hai\\FormMain.cs",
               "ToolTip": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormMain.cs",
               "RelativeToolTip": "23133021_Nguyen_Ngoc_Hai\\FormMain.cs",
-              "ViewState": "AgIAAIQDAAAAAAAAAAAAAJ0DAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAJcDAAAAAAAAAAAAALADAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-26T11:53:34.502Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "FormChiTietHoaDon.cs [Design]",
               "DocumentMoniker": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormChiTietHoaDon.cs",
               "RelativeDocumentMoniker": "23133021_Nguyen_Ngoc_Hai\\FormChiTietHoaDon.cs",
               "ToolTip": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormChiTietHoaDon.cs [Design]",
               "RelativeToolTip": "23133021_Nguyen_Ngoc_Hai\\FormChiTietHoaDon.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T14:30:16.799Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-09-25T14:30:16.799Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "FormChiTietHoaDon.cs",
               "DocumentMoniker": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormChiTietHoaDon.cs",
               "RelativeDocumentMoniker": "23133021_Nguyen_Ngoc_Hai\\FormChiTietHoaDon.cs",
@@ -83,36 +119,35 @@
               "RelativeToolTip": "23133021_Nguyen_Ngoc_Hai\\FormChiTietHoaDon.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAAADYAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-26T11:25:44.938Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-26T11:25:44.938Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "FormMain.cs [Design]",
               "DocumentMoniker": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormMain.cs",
               "RelativeDocumentMoniker": "23133021_Nguyen_Ngoc_Hai\\FormMain.cs",
               "ToolTip": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormMain.cs [Design]",
               "RelativeToolTip": "23133021_Nguyen_Ngoc_Hai\\FormMain.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-26T11:43:26.675Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-09-26T11:43:26.675Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "DataProvider.cs",
               "DocumentMoniker": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\DataProvider.cs",
               "RelativeDocumentMoniker": "23133021_Nguyen_Ngoc_Hai\\DataProvider.cs",
               "ToolTip": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\DataProvider.cs",
               "RelativeToolTip": "23133021_Nguyen_Ngoc_Hai\\DataProvider.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACgAAAAAAAAAAAAqwDwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T07:23:44.266Z"
+              "WhenOpened": "2025-09-28T07:23:44.266Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "FormMain.Designer.cs",
               "DocumentMoniker": "C:\\Windows Application\\DBMS\\DBMS-book-sales-manager\\23133021_Nguyen_Ngoc_Hai\\23133021_Nguyen_Ngoc_Hai\\FormMain.Designer.cs",
               "RelativeDocumentMoniker": "23133021_Nguyen_Ngoc_Hai\\FormMain.Designer.cs",
@@ -120,8 +155,7 @@
               "RelativeToolTip": "23133021_Nguyen_Ngoc_Hai\\FormMain.Designer.cs",
               "ViewState": "AgIAAIMAAAAAAAAAAAAvwIMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T07:57:19.771Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-27T07:57:19.771Z"
             }
           ]
         },

@@ -13,7 +13,9 @@ namespace _23133021_Nguyen_Ngoc_Hai
 {
     public partial class FormMain : Form
     {
-        private DataProvider dataProvider = new DataProvider();
+        private DataProvider dataProvider;
+        private string loggedInUser;
+        private bool isAdmin;
         private int maSachLoaiSach;
         private int maSachSach;
         private int selectedMaSachSach; // Biến lưu ID sách được chọn ban đầu
@@ -25,6 +27,23 @@ namespace _23133021_Nguyen_Ngoc_Hai
         public FormMain()
         {
             InitializeComponent();
+            dataProvider = new DataProvider(); // Fallback với Windows Authentication
+            loggedInUser = "Unknown";
+            isAdmin = false;
+            init();
+        }
+
+        public FormMain(string connectionString, string username, bool isAdminUser)
+        {
+            InitializeComponent();
+            dataProvider = new DataProvider(connectionString);
+            loggedInUser = username;
+            isAdmin = isAdminUser;
+            
+            // Cập nhật tiêu đề form hiển thị thông tin user
+            string roleText = isAdmin ? "Quản trị viên" : "Nhân viên";
+            this.Text = $"Hệ thống quản lý bán sách - {username} ({roleText})";
+            
             init();
         }
 

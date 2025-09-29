@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -14,23 +14,7 @@ namespace _23133021_Nguyen_Ngoc_Hai
 
     {
 
-        private string connectString;
-
-        public DataProvider()
-        {
-            // Chuỗi kết nối mặc định (Windows Authentication) - chỉ để fallback
-            connectString = @"Data Source=LAPTOP-57QKKMG0\SQLEXPRESS;Initial Catalog=QLBanSach;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-        }
-
-        public DataProvider(string connectionString)
-        {
-            connectString = connectionString;
-        }
-
-        public void SetConnectionString(string connectionString)
-        {
-            connectString = connectionString;
-        }
+        private string connectString = "Data Source=LAPTOP-57QKKMG0\SQLEXPRESS;Initial Catalog=QLBanSach;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
 
         public DataTable execQuery(string query)
         {

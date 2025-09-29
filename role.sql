@@ -46,6 +46,7 @@ IF OBJECT_ID('dbo.vw_DanhSachSach',   'V') IS NOT NULL GRANT SELECT ON OBJECT::d
 IF OBJECT_ID('dbo.vw_DanhSachHoaDon', 'V') IS NOT NULL GRANT SELECT ON OBJECT::dbo.vw_DanhSachHoaDon TO app_employee;
 IF OBJECT_ID('dbo.vw_ChiTietHoaDon',  'V') IS NOT NULL GRANT SELECT ON OBJECT::dbo.vw_ChiTietHoaDon  TO app_employee;
 IF OBJECT_ID('dbo.vw_DanhSachLoaiSach','V') IS NOT NULL GRANT SELECT ON OBJECT::dbo.vw_DanhSachLoaiSach TO app_employee;
+IF OBJECT_ID('dbo.vw_LoaiSach',       'V') IS NOT NULL GRANT SELECT ON OBJECT::dbo.vw_LoaiSach       TO app_employee;
 GO
 
 -- Tạo login

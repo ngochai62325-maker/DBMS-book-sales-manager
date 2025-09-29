@@ -16,7 +16,16 @@ namespace _23133021_Nguyen_Ngoc_Hai
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain());
+            
+            // Hiển thị form đăng nhập trước
+            FormLogin loginForm = new FormLogin();
+            
+            if (loginForm.ShowDialog() == DialogResult.OK)
+            {
+                // Nếu đăng nhập thành công, chạy form chính với connection string đã xác thực
+                Application.Run(new FormMain(loginForm.ConnectedConnectionString, loginForm.LoggedInUser, loginForm.IsAdmin));
+            }
+            // Nếu hủy đăng nhập thì thoát chương trình
         }
     }
 }

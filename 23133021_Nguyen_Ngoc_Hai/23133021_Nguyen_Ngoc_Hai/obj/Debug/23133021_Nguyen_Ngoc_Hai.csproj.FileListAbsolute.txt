@@ -19,3 +19,4 @@ C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\231
 C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\23133021_Nguyen_Ngoc_Hai.pdb
 C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\_23133021_Nguyen_Ngoc_Hai.FormChiTietHoaDon.resources
 C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\_23133021_Nguyen_Ngoc_Hai.FormMain.resources
+C:\Windows Application\DBMS\DBMS-book-sales-manager\23133021_Nguyen_Ngoc_Hai\23133021_Nguyen_Ngoc_Hai\obj\Debug\_23133021_Nguyen_Ngoc_Hai.FormLogin.resources
